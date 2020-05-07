@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,10 @@ import org.apache.log4j.Logger;
 @WebServlet(urlPatterns="/ch17/order.nhn")
 public class OrderServlet extends HttpServlet {
 	Logger logger = Logger.getLogger(OrderServlet.class);
+	public void init(ServletConfig config) throws ServletException{
+		logger.info("init 호출 성공");
+	}
+	
 	@Override
 	public void doGet(HttpServletRequest req,
 			 	      HttpServletResponse res) throws ServletException, IOException {

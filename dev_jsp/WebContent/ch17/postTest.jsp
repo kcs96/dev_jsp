@@ -10,6 +10,7 @@
 	<form method="post" action="/ch17/order.nhn">
 		<input type="text" name="mem_name">
 		<input type="submit" value="전송">
+		
 	</form>
 </body>
 </html>

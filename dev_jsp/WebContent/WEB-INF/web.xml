@@ -4,6 +4,16 @@
 	 	<param-name>log4jConfigLocation</param-name>
 	 	<param-value>/WEB-INF/classes/log4.properties</param-value>
 	</context-param>
+	
+	<servlet>
+		<servlet-name>orderInsert</servlet-name>
+		<servlet-class>jsp.ch17.OrderInsert</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>orderInsert</servlet-name>
+		<url-pattern>/ch17/orderInsert.do</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>frontServlet</servlet-name>
 		<servlet-class>jsp.ch17.FrontServlet</servlet-class>
@@ -21,4 +31,42 @@
 		<servlet-name>helloServlet</servlet-name>
 		<url-pattern>/ch13/hello.do</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet> 
+		<servlet-name>DBCPInit</servlet-name>
+		<servlet-class>jsp.ch17.DBCPInitVer2</servlet-class>
+		<init-param>
+			<param-name>jdbcdriver</param-name>
+			<param-value>oracle.jdbc.driver.OracleDriver</param-value>
+		</init-param>
+		<init-param>
+			<param-name>jdbcUrl</param-name>
+			<param-value>jdbc:oracle:thin:@192.168.0.252:1521:orcl11</param-value>
+		</init-param>
+		<init-param>
+			<param-name>username</param-name>
+			<param-value>scott</param-value>
+		</init-param>
+		<init-param>
+			<param-name>pw</param-name>
+			<param-value>tiger</param-value>
+		</init-param>
+		<init-param>
+			<param-name>poolName</param-name>
+			<param-value>chap14</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>mvcServlet</servlet-name>
+		<servlet-class>jsp.ch17.MVCServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>mvcServlet</servlet-name>
+		<url-pattern>*.kosmo</url-pattern>
+	</servlet-mapping>
+	
+	
 </web-app>
