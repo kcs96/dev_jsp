@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>hover이벤트</title>
+	<style type="text/css">
+		.reverse{
+			background: black;
+			color: white;
+		}
+	</style>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+	<h1>Hello</h1>
+	<h1 id='h100'>Hello</h1>
+	<h1>Hello</h1>
+	<script type="text/javascript">
+	//DOM구성이 완료 되었을 때(h1태그가 인지된 후)	
+		$(document).ready(function (){
+			//이벤트 연결
+			$('h1').on('click', function(){
+				$(this).html(function(index, html){
+					return html + '&';
+				});
+			});
+			//
+			$('h1').on({
+				mouseenter: function(){$(this).addClass('reverse');}
+			   ,mouseleave: function(){$(this).removeClass('reverse');}
+			});
+		});////////////////end of ready
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

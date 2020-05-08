@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 확인하기-jquery활용</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+	function send(){
+		$("#f_member").attr("method","get");
+		$("#f_member").attr("action","pwCheckAction2.html");
+		$("#f_member").submit();//전송하기		
+	}
+</script>
+</head>
+<body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var mem_pw = $("#mem_pw").val();
+			alert(mem_pw);
+		});
+	</script>
+	<!-- 
+	id는 화면에서 
+	name은 서버언어(톰캣)
+	 -->
+	<form id="f_member">
+		<label>이름</label><br>
+		<input type="text" id="mem_name" name="mem_name"/><br>
+		<label>비번</label><br>
+		<input type="password" id="mem_pw" name="mem_pw" value="123"/><br>
+		<label>비번확인</label><br>
+		<input type="password" id="pw_check" name="pw_check"/><br>
+		<input type="button" value="제출" onclick="send()">
+	</form>
+</body>
+</html>

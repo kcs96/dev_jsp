@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>부분갱신처리[ajax적용-Ver3]</title>
+	<style type="text/css">
+		#d_login {
+			width: 190px;
+			height: 105px;
+		}
+		#d_logout {
+			width: 190px;
+			height: 70px;
+		}
+	</style>
+<!-- jquery api or easyui api or cookie or css -->
+	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+	<script type="text/javascript">
+	//쿠키에서 읽어온 값 저장
+		var c_name;
+		$.fn.datebox.defaults.formatter = function(date){
+			var y = date.getFullYear();
+			var m = date.getMonth()+1;
+			var d = date.getDate();
+			return y+'-'+(m<10 ? "0"+m:m)+'-'+(d<10 ? "0"+d:d);
+		}
+		$.fn.datebox.defaults.parser = function(s){
+			var t = Date.parse(s);
+			if (!isNaN(t)){
+				return new Date(t);
+			} else {
+				return new Date();
+			}
+		}	
+		function loginAction(){
+			//사용자가 입력한 아이디 담기
+			var u_id = $("#mem_id").val();
+			//사용자가 입력한 비번 담기
+			var u_pw = $("#mem_pw").val();
+			var param = "mem_id="+u_id+"&mem_pw="+u_pw;
+			$.ajax({
+				method: "post"
+			   ,url: "loginAction.jsp"
+			   ,data: param
+			   ,dataType: "html"
+			   ,success:function(data){
+				   //alert("data:"+data+", length:"+data.length);
+				   if("아이디가 없습니다."==data.trim()){
+					   alert("아이디가 없는 경우");
+					   $("#mem_id").textbox('setValue','');
+					   return;
+				   }else if("비번이 틀렸습니다."==data.trim()){
+					   alert("비번이 없는 경우");
+					   $("#mem_pw").passwordbox('setValue','');
+					   return;
+				   }
+				   else{//아이디도 존재하고 비번까지 일치하는 경우
+					   $.cookie("c_name",data.trim());
+					   $("#d_login").hide();
+					   $("#d_logout").show();
+				   }
+			   }
+			});//////////////////////end of login ajax
+		}////////////////////////////end of loginAction
+		function logoutAction(){
+			//쿠키에 저장된 이름 삭제하기
+			$.cookie('c_name',null);
+			//로그인 시에는 select문을 통하여 인증 서비스를 처리해야 하므로 브라우저에서 
+			//톰캣서버로 다시 톰캣 서버에서 오라클 서버로 요청을 보낸 후 오라클이 응답한 메시지를
+			//다시 톰캣으로 다시 브라우저로 응답 보내야 하므로 지연이 발생함.
+			$("#d_login").show();
+			$("#d_logout").hide();				
+		}///////////////////////////end of logoutAction
+	</script>
+</head>
+<body>
+<script type="text/javascript">
+	$(document).ready(function (){
+		var c_name = null;
+		c_name = $.cookie('c_name');
+		//alert("c_name:"+c_name);
+		//쿠키에서 꺼낸 이름이 null이면 로그인을 하지 않음.
+		//null이 아니면 로그인 한 경우
+		if(c_name==null){
+			$("#d_login").show();
+			$("#d_logout").hide();			
+		}
+		else{
+			$("#d_login").hide();
+			$("#d_logout").show();						
+		}
+		$('#tre_movie').tree({
+			onClick: function(node){
+				//선택한 노드의 문자열을 가져옴.
+				//alert(node.text);  // alert node text property when clicked
+				if("회원목록" == node.text){
+					if($.cookie("c_name")!=null){
+						alert("회원목록");					
+					}else{
+						alert("로그인 하신 후 이용할 수 있습니다.");
+						return;
+					}
+				}
+				else if("예매관리" == node.text){
+					alert("예매관리");					
+				}
+			}
+		});///////////////end of tree
+		$("#dg_member").datagrid({
+			columns:[[
+				{field:'id', title:'아이디', width:100}
+			   ,{field:'name', title:'이름', width:120}
+			   ,{field:'address', title:'주소', width:300}
+			   ,{field:'hp', title:'H.P', width:140}
+			]]
+		   ,data:[
+			   {id:'test', name:'김유신', address:'서울시 마포구 공덕동', hp:'010-555-7777'}
+			  ,{id:'apple', name:'이성계', address:'서울시 금천구 가산동', hp:'010-333-7777'}
+			  ,{id:'tomato', name:'강감찬', address:'서울시 영등포구 영등포동', hp:'010-6688-7777'}
+		   ]
+		});
+		$('#pp').pagination({
+			pageList: [5,10,15,20]
+		});
+	});///////////////////end of ready
+</script>
+	<div id="lay_movie" class="easyui-layout" style="width:1000px;height:500px;">
+		<!--=============== [[ 메뉴 트리 구성 ]] ==============-->	
+		<div data-options="region:'west',title:'코딩놀이',split:true" style="width:200px;">		
+			<div style="margin:10px 0;"></div>
+		<!--############### [[ 로그인   영역 ]] ###############-->
+			<div id="d_login" align="center">
+				<div style="margin:3px 0;"></div>
+				<input id="mem_id" name="mem_id" class="easyui-textbox">
+				<script type="text/javascript">
+				$('#mem_id').textbox({
+				    iconCls:'icon-man',
+				    iconAlign:'right',
+				    prompt: '아이디'
+				})				
+				</script>				
+				<div style="margin:3px 0;"></div>
+				<input id="mem_pw" name="mem_pw" class="easyui-passwordbox">
+				<script type="text/javascript">
+				$('#mem_pw').passwordbox({
+				    iconAlign:'right',
+				    prompt: '비밀번호'
+				})				
+				</script>				
+				<div style="margin:3px 0;"></div>
+					<a id="btn_login" href="javascript:loginAction()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-man'">로그인</a>				
+					<a id="btn_member" href="javascript:memberAction()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-add'">회원가입</a>				
+			</div>
+		<!--############### [[ 로그아웃 영역 ]] ###############-->
+			<div id="d_logout" align="center">
+				<div style="margin:5px 0;"></div>
+				<div id="d_ok">강감찬님 환영합니다.</div>
+				<div style="margin:3px 0;"></div>
+					<a id="btn_login" href="javascript:logoutAction()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-cancel'">로그아웃</a>				
+					<a id="btn_member" href="javascript:updateAction()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-edit'">정보수정</a>					
+			</div>
+		<!--############### [[ 메뉴 트리 영역 ]] ###############-->
+			<ul id="tre_movie" class="easyui-tree">
+            	<!--@@@@@@@@@@@@@ 회원관리 @@@@@@@@@@@@-->
+                <li data-options="state:'closed'">
+                    <span>회원관리</span>
+                    <ul>
+                        <li>
+                            <span>회원목록</span>
+                        </li>
+                        <li>
+                            <span>회원등록</span>
+                        </li>
+                        <li>
+                            <span>회원수정</span>
+                        </li>
+                        <li>
+                            <span>회원탈퇴</span>
+                        </li>
+                    </ul>
+                </li>	
+            	<!--@@@@@@@@@@@@@ 예매관리 @@@@@@@@@@@@-->
+                <li data-options="state:'closed'">
+                    <span>예매관리</span>
+                    <ul>
+                        <li>
+                            <span>예매조회</span>
+                        </li>
+                        <li>
+                            <span>예매하기</span>
+                        </li>
+                        <li>
+                            <span>예매수정</span>
+                        </li>
+                        <li>
+                            <span>예매취소</span>
+                        </li>
+                    </ul>
+                </li>			
+            	<!--@@@@@@@@@@@@@ 영화정보 @@@@@@@@@@@@-->
+        	</ul>	
+		</div>
+		<!--=============== [[ 메뉴 선택에 따른  내용 ]] ==============-->	
+		<div data-options="region:'center',title:'영화예매 시스템'" style="padding:5px;background:#eee;">
+	       	<div style="margin:5px 0;"></div>
+	       	Home > 회원관리 > 회원목록
+	       	<hr>
+	       	<div style="margin:20px 0;"></div>
+	       	<!--@@@@@@@@@@@@@ 검색조건 추가하기 @@@@@@@@@@@@-->
+	       	<label>이름 : </label>
+	       	<input id="sb_name" class="easyui-searchbox"/>
+	       	<label>H.P : </label>
+	       	<input id="sb_name" class="easyui-maskedbox" mask="999-9999-9999" style="width:140px"/>
+	       	<label>생년월일 : </label>
+	       	<input id="db_birth" class="easyui-datebox" style="width:140px;">
+	       	<div style="margin:10px 0;"></div>
+	       	<!--@@@@@@@@@@@@@ 회원관리 @@@@@@@@@@@@-->
+	       	<a id="btn_sel" href="javascript:memberList()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-search'">조회</a>		
+	       	<a id="btn_ins" href="javascript:memberInsert()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-add'">입력</a>		
+	       	<a id="btn_upd" href="javascript:memberInsert()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-edit'">수정</a>		
+	       	<a id="btn_del" href="javascript:memberInsert()" class="easyui-linkbutton" 
+					data-options="iconCls:'icon-remove'">삭제</a>		
+	       	<div style="margin:5px 0;"></div>
+			<div id="dg_member"></div>
+			<div id="pp" class="easyui-pagination" style="background:#efefef;border:1px solid #ccc;"
+        		data-options="total:3,pageSize:3">
+            </div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

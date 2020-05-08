@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- 
+학습목표
+나는 easyui API를 활용하여 화면을 구성할 수 있다.
+나는 easyui에서 지원하는 태그 속성들을 자바스크립트 언어를 활용하여 조작할 수 있다.
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DataGrid활용 연습 - 1</title>
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript">
+		function searchList(){
+			//alert("조회 버튼 클릭 성공");
+			//insert here
+			$("#dg_member").datagrid({//두번째 로딩
+				url: "jsonMemberList.jsp"
+			   ,onLoadSuccess:function(data2){
+					//alert("dg_member loading success!!!");
+					alert("data2:"+data2);
+				}/////////end of onLoadSuccess
+			});
+		}
+	</script>
+</head>
+<body>
+	<table id="dg_member" class="easyui-datagrid"></table>
+	<!-- 회원정보 등록 화면 시작 -->
+	<div id="dlg_memberINS" class="easyui-dialog">
+        The dialog content.
+    </div>
+	<!-- 회원정보 수정 화면 시작 -->
+	<div id="dlg_memberUPD" class="easyui-dialog">
+        The dialog content.
+    </div>
+	<!-- 회원정보 삭제 화면 시작 -->
+	<div id="dlg_memberDEL" class="easyui-dialog">
+       <label>비밀번호확인</label>
+       <input id="mem_pw" class="easyui-passwordbox" prompt="Password" iconWidth="28" style="width:100%;height:34px;padding:10px">
+    </div>
+	<!-- 회원정보 등록 화면  끝   -->
+	<script type="text/javascript">
+/* 
+다이얼로그창에 뿌려지는 페이지를 따로 XXX.jsp로 작성한 경우에도 부모창에서 자식창의 콤포넌트에 접근가능함.
+한 페이지 안에 있어도 되고 두 페이지로 분리해서 관리해도 된다.
+한 사람이 관리하는 경우라면 한 페이지에 두는 것이 좋겠고
+여러사람이 업무를 나누어 관리하는 경우라면 페이지를 분리 하는 것이 좋겠다.
+*/	
+		$(document).ready(function (){
+	        $("#dlg_memberINS").dialog({
+	        	title: "회원정보 등록"
+	           ,closed: true
+	           ,modal: false
+	           ,href:"memberINS.jsp"
+	           ,width: 300
+	           ,height: 200
+	        });
+	        $("#dlg_memberUPD").dialog({
+	        	title: "회원정보 수정"
+	           ,closed: true
+	           ,modal: true
+	           ,href:"memberUPD.jsp"
+	           ,width: 300
+	           ,height: 200
+	        });
+	        $("#dlg_memberDEL").dialog({
+	        	title: "회원정보 삭제"
+	           ,closed: true
+	           ,modal: false
+	           ,width: 300
+	           ,height: 200
+	        });
+			$("#dg_member").datagrid({//첫번째로 로딩
+			//datagrid에 출력될 값(오라클서버,json-변경됨)	
+			  //insert here
+			   toolbar: [{
+				    text: '조회'
+				   ,iconCls: 'icon-search'
+				   ,handler: function(){searchList();}
+				},'-',{
+					text: '입력'
+				   ,iconCls: 'icon-edit'
+				   ,handler: function(){ $("#dlg_memberINS").dialog('open') }
+				},'-',{
+					text: '수정'
+				   ,iconCls: 'icon-add'
+				   ,handler: function(){ $("#dlg_memberUPD").dialog('open')}
+				},'-',{
+					text: '삭제'
+				   ,iconCls: 'icon-remove'
+				   ,handler: function(){ $("#dlg_memberDEL").dialog('open')}
+				},'-',{
+					text: '삭제처리'
+				   ,handler: function(){ 
+					  alert("사용자가 입력한 비번 확인 : "+$("#mem_pw").val());
+					  alert("사용자가 입력한 비번 확인2 : "+$("#mem_pw2").val());
+				   }
+				}]
+			   ,title: "회원관리 - Ver1.0"
+			   ,width: 700, height: 500
+			   ,columns:[[
+			        {field:'mem_no',title:'번호',width:100},
+			        {field:'mem_id',title:'아이디',width:120},
+			        {field:'mem_name',title:'이름',width:150},
+			        {field:'mem_email',title:'이메일',width:200},
+			    ]]
+			//datagrid에 출력될 값(상수값-고정값)
+/* 			   ,data: [
+					{dname:'value11', loc:'value12'},
+					{dname:'value21', loc:'value22'}
+				] */
+			//이벤트 처리에 부에서 undefine 발생한 경우 전체 화면이 깨지진 않음.
+			   ,onDblClickRow: function(index, row){
+				   alert("index:"+index+", row:"+row+", row.mem_no:"+row.mem_no+", row.mem_id:"+row.mem_id);
+			   }
+				//inert here
+			   ,onLoadSuccess: function(data){
+				   //alert(data);
+			   }
+			});
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

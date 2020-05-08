@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+	var result = '';
+	fetch('http://localhost:8000/jEasyUI/datagrid/jsonDeptList.jsp')
+	.then(function(response){
+		return response.json();
+	})
+	.then(function(myJson){
+		//console.log(JSON.stringify(myJson));
+		result = JSON.stringify(myJson);
+		//alert("result : "+result);
+		jsonDoc = JSON.parse(result);
+		for(var i=0;i<jsonDoc.length;i++){
+			alert(jsonDoc[i].DNAME+", "+jsonDoc[i].LOC);
+		}
+	});
+</script>
+<div id="d_here"></div>
+</body>
+</html>
+
+
+
+
+
+
+

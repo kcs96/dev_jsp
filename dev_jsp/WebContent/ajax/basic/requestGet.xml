@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table border="1">
+	<tr>
+		<td>번호</td>
+		<td>수강과목</td>
+		<td>강의실</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>JAVA</td>
+		<td>301</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>ORACLE</td>
+		<td>501</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>AJAX</td>
+		<td>405</td>
+	</tr>
+</table>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>id와 name속성 활용</title>
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<style type="text/css">
+		div#d_msg {
+			position: absolute;
+		    border: 1px solid black;
+		    width: 200;
+		    height: 60;
+		}
+	</style>
+	<script type="text/javascript">
+		function test(){
+			alert($("#tb_id").val());
+		}
+		function send(){
+			$("#f_login").attr("method","post");
+			$("#f_login").attr("action","textboxAction.jsp");//umem_id=apple
+			$("#f_login").submit();
+		}
+	</script>
+</head>
+<body>
+<!-- 
+<span class="textbox" style="width: 173px;">
+<input id="_easyui_textbox_input1" type="text" 
+class="textbox-text validatebox-text" autocomplete="off" tabindex="" 
+placeholder="" style="margin: 0px; padding-top: 0px; 
+padding-bottom: 0px; height: 28px; line-height: 28px; width: 171px;">
+<input type="hidden" class="textbox-value" value="rty">
+</span>
+<input id="tb_id" width="100px" 
+class="easyui-textbox textbox-f" 
+placeholder="아이디" style="display: none;">
+ -->
+<button onclick="test()">클릭</button>
+<form id="f_login">
+<input id="tb_id" name="umem_id" width="100px" class="easyui-textbox" placeholder="아이디">
+<button onclick="send()">전송</button>
+</form>
+
+<div id="d_msg"></div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#d_msg").hide();
+		$('#tb_id').textbox('textbox').bind('keyup', function(e){
+			//alert("keyup");
+			$("#d_msg").show();	
+			//$("#d_msg").css("width",173+"px");
+			$("#d_msg").css("left",$("#_easyui_textbox_input1").offset().left+"px");
+			$("#d_msg").css("width",$(".textbox").width()+"px");
+			$("#d_msg").css("top",$("#_easyui_textbox_input1").offset().bottom+"px");
+			$("#d_msg").html("<b>결과처리</b>");			
+		});
+	});
+</script>
+</body>
+</html>
+
+
+

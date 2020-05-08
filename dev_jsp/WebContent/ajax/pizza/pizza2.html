@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>피자 주문 실습 - ajax활용</title>
+	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script type="text/javascript">
+	function getCustomerInfo(){
+		alert("getCustomerInfo 호출 성공");
+		//사용자가 입력한 전화번호 가져오기
+		var u_tel = $("#mem_tel").val();
+		alert(u_tel);
+	}
+</script>
+</head>
+<body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//alert("ready");
+			$("#mem_tel").textbox({
+				onChange:function(e){
+					alert("mem_tel:"+$(this).val());
+					getCustomerInfo();
+				}
+			});
+		});
+	</script>
+	<p>
+		<img src="breakneck-logo.gif" alt="Break Neck Pizza"/>
+	</p>
+	<p>
+		Enter your phone number:
+		<input class="easyui-textbox" size="15" id="mem_tel" name="mem_tel"/>
+	</p>
+</body>
+</html>

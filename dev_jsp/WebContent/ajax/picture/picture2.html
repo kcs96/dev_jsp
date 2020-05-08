@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>그림소개</title>
+<link rel="stylesheet" type="text/css" href="pictureMain.css?123">
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+	table {
+		border: 1px solid black;
+	}
+</style>
+	<script type="text/javascript">
+		function startMethod(td){//this
+			//alert(td);
+			//$("#d_detail").attr("left",150);
+			//$("#d_detail").attr("top",100);
+			var u_pic = $(td).attr("id");//attriubte, 속성이름이 id
+			//alert("사용자가 마우스 오버한 그림 파일명:"+u_pic);
+			$.ajax({
+				method:"post"
+//			   ,url:"pictureInfo.jsp?id="+u_pic+"&timestamp="+new Date().getTime()
+			   ,url:"pictureInfo.jsp"
+			   ,data: "id="+u_pic
+			   ,success:function(result){
+				   //alert(result);
+				   $("#d_detail").css("left", $(td).offset().left+103+"px");
+				   $("#d_detail").css("top", $(td).offset().top+"px");
+				   $("#d_detail").html(result);
+			   }
+			});
+		}
+		function clearMethod(){
+			//alert('clear');
+			$("#d_detail").html("");
+		}
+	</script>
+</head>
+<body>
+<div id="d_detail"></div>
+<table>
+	<thead>
+		<th colspan="2">그림 목록</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td align="center"><img src="picture1.jpg" width="50" height="50"/></td>
+			<td id="picture1.jpg" onmouseover="startMethod(this)" onmouseout="clearMethod()">추상화1</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="picture2.jpg" width="50" height="50"/></td>
+			<td id="picture2.jpg" onmouseover="startMethod(this)" onmouseout="clearMethod()">추상화2</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="picture3.jpg" width="50" height="50"/></td>
+			<td id="picture3.jpg" onmouseover="startMethod(this)" onmouseout="clearMethod()">추상화3</td>
+		</tr>
+		<tr>
+			<td align="center"><img src="picture4.jpg" width="50" height="50"/></td>
+			<td id="picture4.jpg" onmouseover="startMethod(this)" onmouseout="clearMethod()">추상화4</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>preventDefault1.html</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+<!-- 
+	html에서 a태그나 submit태그는 고유한 동작이 있다.
+	그러한 고유 동작을 중단시킴
+	preventDefault()
+	주의사항:브라우저가 제공하는 내장객체는 전부 인스턴스화 없이 즉시 사용가능
+ -->
+	<a href="http://www.ikosmo.co.kr">한국소프트인재개발원</a>
+	<script type="text/javascript">
+		$("a").click(function(e){
+			e.preventDefault();
+			alert("페이지 이동시...");
+		});
+	</script>
+</body>
+</html>

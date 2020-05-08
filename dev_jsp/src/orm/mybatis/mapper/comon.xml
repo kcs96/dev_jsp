@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orm.mybatis.mapper.comonMapper">
+	<select id="getZdoList" parameterType="map" resultType="java.util.Map">
+	select distinct(zdo) zdo from zipcode_t
+	</select>
+	
+	
+	<select id="getSiGuList" parameterType="map" resultType="java.util.Map">
+	 select distinct(sigu) from zipcode_t
+		 <where>
+			 <if test="zdo != null">
+			  	AND zdo = #{zdo} 
+			  </if>
+		 </where>
+	</select>
+	
+	<select id="getDongList" parameterType="map" resultType="java.util.Map">
+	 select distinct(dong) dong from zipcode_t
+	  <where>
+			 <if test="sigu != null">
+			  	AND sigu = #{sigu}
+			  </if>
+		 </where>
+	</select>
+	
+	<select id="getZipcodeList" parameterType="map" resultType="java.util.Map">
+	select address,zipcode from zipcode_t
+	<where>
+		<if test="address != null">
+			AND address like '%'||#{address}||'%' 
+		</if>
+	</where>
+	</select>
+	
+
+	
+	
+</mapper> 

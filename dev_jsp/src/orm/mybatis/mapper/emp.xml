@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orm.mybatis.mapper.empMapper">
+	<select id="empList" parameterType="map" resultType="java.util.Map">
+	 select empno, ename, job, mgr, TO_CHAR(hiredate,'YYYY-MM-DD') hiredate, sal, comm, deptno
+	   from emp
+	   <if test="empno > 0">
+	      where empno = #{empno}
+	   </if>
+	   ORDER BY empno desc
+	   </select>
+	   <!-- 
+	     <select id="empList2" parameterType="map" resultType="java.util.EmpVO">
+		 select empno, ename, job, mgr, hiredate, sal, comm, deptno
+	   from emp
+	   </select>
+	    -->
+	   
+	   <insert id="empINS" parameterType="map">
+	  		 insert into emp values(#{empno},#{ename},#{job},#{mgr},#{hiredate},#{sal},#{comm},#{deptno})
+	   </insert>
+	   
+	   <update id="empUPD" parameterType="map">
+	  		 update emp set 
+	  		 <if test="ename!=null">
+	  		 ename=#{empno}  
+	  		 </if>
+	  		 <if test="job!=null">
+	  		 ,job=#{job}
+	  		 </if>
+	  		 <if test="mgr>0">
+	  		 ,mgr=#{mgr}
+	  		 </if>
+	  		  <if test="hiredate!=null">
+	  		 ,hiredate=#{hiredate}
+	  		 </if>
+	  		  <if test="sal>0">
+	  		 ,sal=#{sal}
+	  		 </if>
+	  		  <if test="deptno>0">
+	  		 ,deptno=#{deptno}
+	  		 </if>
+	  		 <if test="empno > 0">
+	  		  where empno = #{empno}
+	  		 </if>
+	   </update>
+	   
+	   <delete id="empDelete" parameterType="list">
+	   	delete from emp
+	   	 where empno in
+	   	 <foreach item="item" index="index" collection="list"
+	   	          open="(" separator="," close=")">
+	   	          #{item}
+	   	 </foreach>   
+	   </delete>
+	   
+</mapper> 

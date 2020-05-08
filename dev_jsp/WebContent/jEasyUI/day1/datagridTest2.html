@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DataGrid활용 연습 - 1</title>
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript">
+		function searchList(){
+			alert("조회 버튼 클릭 성공");
+		}
+	</script>
+</head>
+<body>
+	<table id="dg_member" toolbar="#toolbar" class="easyui-datagrid"></table>
+	<div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchList()">조회</a>		
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function (){
+			$("#dg_member").datagrid({
+			//datagrid에 출력될 값(오라클서버,json-변경됨)	
+				url: "../../json/dept.json"
+			   ,title: "회원관리 - Ver1.0"
+			   ,width: 700, height: 500
+			   ,columns:[[
+			        {field:'dname',title:'부서명',width:100},
+			        {field:'loc',title:'지역',width:100},
+			    ]]
+			//datagrid에 출력될 값(상수값-고정값)
+			   ,data: [
+					{dname:'value11', loc:'value12'},
+					{dname:'value21', loc:'value22'}
+				]
+			//이벤트 처리에 부에서 undefine 발생한 경우 전체 화면이 깨지진 않음.
+			   ,onDblClickRow: function(index, row){
+				   alert("index:"+index+", row:"+row+", row.f1:"+row.f1+", row.f2:"+row.f2);
+			   }
+				//inert here
+			   ,onLoadSuccess: function(data){
+				   alert(data);
+			   }
+			});
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

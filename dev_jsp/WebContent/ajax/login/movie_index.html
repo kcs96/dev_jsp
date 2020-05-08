@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>부분갱신처리[ajax활용 실습]</title>
+	<style type="text/css">
+		#d_login {
+			border: 1px solid #CCCCCC;
+			background: orange;
+			width: 195px;
+			height: 110px;
+		}
+		#d_logout {
+			border: 1px solid #CCCCCC;
+			background: green;
+			width: 195px;
+			height: 80px;
+		}
+	</style>
+<!-- jquery api or easyui api or cookie or css -->
+	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+	$(document).ready(function (){
+		$("#d_login").show();
+		$("#d_logout").hide();
+	});
+</script>
+	<div id="lay_movie" class="easyui-layout" style="width:1000px;height:500px;">
+		<!--=============== [[ 메뉴 트리 구성 ]] ==============-->	
+		<div data-options="region:'west',title:'코딩놀이',split:true" style="width:200px;">		
+			<div style="margin:10px 0;"></div>
+		<!--############### [[ 로그인   영역 ]] ###############-->
+			<div id="d_login" align="center">
+				<input id="mem_id" name="mem_id" class="easyui-textbox">
+				<script type="text/javascript">
+				$('#mem_id').textbox({
+				    iconCls:'icon-man',
+				    iconAlign:'right',
+				    prompt: '아이디'
+				})				
+				</script>				
+				<div style="margin:3px 0;"></div>
+				<input id="mem_pw" name="mem_pw" class="easyui-passwordbox">
+				<script type="text/javascript">
+				$('#mem_pw').passwordbox({
+				    iconAlign:'right',
+				    prompt: '비밀번호'
+				})				
+				</script>				
+			</div>
+		<!--############### [[ 로그아웃 영역 ]] ###############-->
+			<div id="d_logout" align="center"></div>
+		</div>
+		<!--=============== [[ 메뉴 선택에 따른  내용 ]] ==============-->	
+		<div data-options="region:'center',title:'영화예매 시스템'" style="padding:5px;background:#eee;"></div>
+	</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

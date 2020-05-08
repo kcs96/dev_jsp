@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!-- 
+각 브라우저들은 부분 페이지 갱신을 위해서 모두 비동기 통신객체를 지원함.
+XMLHttpRequest
+속성
+함수
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQueryBoardSell.jsp[jquery활용]</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.js"></script>
+<style type="text/css">
+	body {
+		font-family: sans-serif;
+		text-align: center;
+	}
+	table {
+	    margin-left: auto;
+	    margin-right: auto;
+		border: 1px solid black;
+	}
+	td,th {
+		border: 1px dotted gray;
+		text-align:center;
+	}
+	th {
+		background-color: #FFAAAA;
+	}
+</style>
+<script type="text/javascript">
+/*
+readyState:onreadystatechange에서 사용할 수 있는 HTTP요청 상태의 코드값입니다.
+
+0(uninitialized):open메소드가 호출되기 이전
+1(loading):HTTP요청 준비가 된 상태
+하지만 아직 보내지 않은 상태 - send메소드 호출 직전 상태
+2(loaded):HTTP요청을 보내어 처리하고 있는 중. 헤더는 읽을 수 있는 상태
+get방식인지 post방식인지
+http프로토콜에대한 버전 1.1
+브라우저의 타입
+3(interactive):데이터를 받고 있는 중. 하지만 아직 완전히 받지는 못한 상태
+4(complete): 데이터까지 완전히 받은 상태
+비로서 responseText나  혹은 responseXML 속성으로 데이터를 읽을 수 있는 상태
+status : HTTP상태 코드를 숫자로 반환함. 200  404
+statusText:HTTP상태 코드에 대한 문자열 반환함.  OK Not Found
+예를들면 200, 304, 404, 405 , 500 등등
+*/
+	function getBoardSold(){
+		alert("getBoardSold 호출 성공");
+		$.ajax({
+			url: "boardAction.jsp"
+		   ,method: "get"
+		   ,dataType: "text"
+		   ,success:function(data){
+			   //alert("data:"+data);
+			   $("#boardSold").text(data);
+			   var cost = $("#cost").text();
+			   var price = $("#price").text();
+			   
+			   alert( price-cost );
+			   $("#cash").text(price-cost);
+		   }
+		   ,error:function(xhrObject){//xhrObject == XMLHttpRequest
+			   //alert(xhrObject.responseText);
+		   		document.write(xhrObject.responseText);
+		   }
+		});
+		//0-1-2-3-4
+		//onreadystatechange속성은 HTTP요청의 상태 변화에 따라 호출되는 이벤트 핸들러 임.
+		//대입연산자 오른쪽은 상태 변화에 따라 호출될 함수 이름을 적는다.(괄호없음)
+		//이때 서버로 전송이 일어남. 목적지는 boardAction.jsp 페이지임.
+	}
+	function sold_process(){
+		//alert(xhrObject.readyState);//0->1->2->3->4
+		if(xhrObject.readyState == 4){
+			if(xhrObject.status == 200){
+				var newTotal = xhrObject.responseText;//15
+				//alert("newTotal : "+newTotal);
+				var boardSoldEl = document.getElementById("boardSold");
+				replaceText(boardSoldEl,newTotal);
+				//보드 한개당 마진 금액 계산
+				//구매가 구하기
+				var costEl = document.getElementById("cost");
+				var cost = getText(costEl);
+				//소비자가 구하기
+				var	priceEl = document.getElementById("price");
+				var price = getText(priceEl);
+				alert("구매가는 "+cost+", 소비자가 "+price);
+				//보드 한 개당 마진 금액
+				var cashPerBoard = price-cost;
+				var cash = cashPerBoard*newTotal;
+				alert("전체 마진은 ? "+cash);
+			}/////////////end of 200 OK 상태값
+		}/////////////////end of 4로 처리가 완료된 상태
+	}
+	//span태그가 가지고 있는 텍스트 노드값을 읽어오기
+	function getText(el){
+		var text="";
+		if(el!=null){
+			if(el.childNodes){
+				for(var i=0;i<el.childNodes.length;i++){
+					var childNode = el.childNodes[i];
+					//너 텍스트 노드니?
+					if(childNode.nodeValue !=null){
+						text = text+childNode.nodeValue;
+					}		
+				}
+			}
+		}
+		return text;
+	}
+	//기존 TextNode의 값을 다른 문자열로 바꾸기
+	/***********************************************
+	param1 :document.getElementById("boardSold")
+	param2 :xhrObject. 
+	************************************************/
+	function replaceText(el, value){
+		if(el !=null){
+			clearText(el);//기존에 있던 10을 지워주세요.
+			//새로운 텍스트 노드 15를 생성하기
+			var newNode = document.createTextNode(value);//15
+			//위에서 생성한 텍스트 노드 값을 el에 붙이는 함수 호출하기
+			el.appendChild(newNode);
+		}
+	}
+	//기존 태그안에 문자열 지우는 함수 구현
+	function clearText(el){
+		if(el !=null){
+			if(el.childNodes){
+				for(var i=0;i<el.childNodes.length;i++){
+					var childNode = el.childNodes[i];
+					el.removeChild(childNode);
+				}
+			}
+		}
+	}
+</script>
+</head>
+<body>
+<h2>보드 판매량</h2>
+<table width="300px" height="80px">
+	<tr>
+		<th width="120px">보드 판매량</th>
+		<td width="180px"><span id="boardSold">10</span></td>
+	</tr>
+	<!-- 
+	소비자가-구매가=보드 한개당 마진 금액
+	한개당 마진 금액*판매량=마진금액계산
+	 -->
+	<tr>
+		<th>구매가</th>
+		<td><span id="cost">100</span>원</td>
+	</tr>
+	<tr>
+		<th>소비자가</th>
+		<td><span id="price">120</span>원</td>
+	</tr>
+</table>
+<h2>마진금액 : <span id="cash">0</span>원</h2>
+<button onclick="getBoardSold()">마진은?</button>
+</body>
+</html>
+
+
+
+
+

@@ -4,6 +4,14 @@
 	 	<param-name>log4jConfigLocation</param-name>
 	 	<param-value>/WEB-INF/classes/log4.properties</param-value>
 	</context-param>
+	<context-param>
+			<param-name>driver</param-name>
+			<param-value>oracle.jdbc.driver.OracleDriver</param-value>
+	</context-param>
+	<context-param>
+			<param-name>user</param-name>
+			<param-value>scott</param-value>
+	</context-param>
 	
 	<servlet>
 		<servlet-name>orderInsert</servlet-name>
@@ -66,6 +74,24 @@
 	<servlet-mapping>
 		<servlet-name>mvcServlet</servlet-name>
 		<url-pattern>*.kosmo</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>boardServlet</servlet-name>
+		<servlet-class>ajax.BoardAction</servlet-class>
+		<init-param>
+			<param-name>mem_id</param-name>
+			<param-value>apple</param-value>
+		</init-param>
+		<init-param>
+			<param-name>mem_pw</param-name>
+			<param-value>123</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>boardServlet</servlet-name>
+		<url-pattern>*.ajax</url-pattern>
 	</servlet-mapping>
 	
 	

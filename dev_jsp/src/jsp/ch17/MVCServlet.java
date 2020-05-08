@@ -20,9 +20,38 @@ public class MVCServlet extends HttpServlet {
 	public void doService(HttpServletRequest req,
 	 	      HttpServletResponse res) throws ServletException, IOException {
 		logger.info("doService 호출 성공");
+		String uri = req.getRequestURI();  // member/memberList.kosmo
+		String context = req.getContextPath(); //server.xml의 context path
+		logger.info("url:"+uri);
+		logger.info("context:"+context);
+		String command = uri.substring(context.length()+1);
+		logger.info("command:"+command);
+		
+		int end = command.lastIndexOf('.');
+		command = command.substring(0,end);
+		String imsi[] = null;
+		imsi = command.split("/");
+		/*
+		for(String val : imsi) {
+			logger.info(val);
+		}
+		*/
+		
 		MemberController memCtrl = new MemberController();
-		memCtrl.execute(req,res);
+		OrderController orderCtrl = new OrderController();
+		GoodsController goodCtrl = new GoodsController();
+		
+		if("member".equals(imsi[0])) {
+			memCtrl.execute(req,res);
+		}
+		else if("order".equals(imsi[0])) {
+			orderCtrl.execute(req,res);
+		}
+		else if("goods".equals(imsi[0])) {
+			goodCtrl.execute(req,res);
+		}
 	}  
+	
 	@Override
 	public void doGet(HttpServletRequest req,
 			 	      HttpServletResponse res) throws ServletException, IOException {

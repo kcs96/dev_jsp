@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>피자 주문 실습 - [ajax활용 + easyUI]</title>
+	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#mem_tel").textbox({
+			onChange:function(newValue, oldValue){
+				//alert("onChange newValue:"+newValue+", oldValue:"+oldValue);
+				var u_tel = $("#mem_tel").val();
+				//alert(u_tel);
+				$.ajax({
+					method: "POST"
+				   ,url: "customerInfo.jsp"
+				   ,success:function(result){
+					   var res = JSON.stringify(result);
+					   var resDoc = JSON.parse(res);//배열전환
+					   var temp = "";
+					   for(var i=0;i<resDoc.length;i++){
+						   if(u_tel == resDoc[i].mem_tel){
+							  temp +=resDoc[i].mem_addr;
+						   }
+					   }	
+					   $("#mem_addr").text(temp);
+				   }
+				});				
+			}
+		});
+	});
+</script>
+	<p>
+		<img src="breakneck-logo.gif" alt="Break Neck Pizza"/>
+	</p>
+	<p>
+		Enter your phone number:
+		<input class="easyui-textbox" size="15" id="mem_tel" name="mem_tel"/>
+	</p>
+	<p>Your order will be delivered to:</p>
+	<p>
+		<textarea id="mem_addr" name="mem_addr" rows="4" cols="50"></textarea>
+	</p>
+</body>
+</html>
+
+
+
+
+
+
+

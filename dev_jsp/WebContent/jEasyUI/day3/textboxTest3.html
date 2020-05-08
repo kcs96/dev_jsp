@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>id와 name 속성 활용</title>
+	<link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+    
+    <style type="text/css">
+    	div#d_msg{
+    		position: absolute;
+    		border: 3px solid black;
+    		width:200;
+    		height:60;
+    	}
+    </style>
+    <script type="text/javascript">
+    	function test(){
+    		alert($("#tb_id").val());//$("#tb_id").text()가 아닌이유.... 위는 easyui를 사용하고 있음.....
+    	}
+    	function send(){
+    		location.href="textboxAction.jsp?tb_id="+$("#tb_id").val();
+    		//tb_id에 값을 직접 넣어줬기 때문에... name이 없어도 값이 나옴.....
+    		//∴ location.href="textboxAction.jsp"을 실행하면 null.....
+    	}
+    </script>
+</head>
+<body>
+	<!-- 
+		<input id="tb_id" class="easyui-textbox" placeholder="아이디"> ====> name이 없다면.... 
+		location.href="textboxAction.jsp" ====> null.....
+	 -->
+	<input id="tb_id" name="tb_id" class="easyui-textbox" placeholder="아이디">
+	<button onclick="test()">클릭</button>
+	<button onclick="send()">전송</button>
+	<div id="d_msg"></div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#d_msg").hide();
+			$("#tb_id").focus();
+			$('#tb_id').textbox('textbox').bind('keyup', function(e){
+				$("#d_msg").css("left", $("#_easyui_textbox_input1").offset().left+"px");
+				$("#d_msg").css("top", $("#_easyui_textbox_input1").offset().bottom+"px");
+				$("#d_msg").css("width", $(".textbox").width()+"px");
+				//------------------------------
+				var msg = $("#_easyui_textbox_input1").val();
+				//alert(msg);
+				if(msg.length>0){
+					//$("#d_msg").html("<b>결과처리</b>");//괄호에 태그가 포함되어 있다면...html....
+					$("#d_msg").html("<b>"+msg+"</b>");
+					$("#d_msg").show();					
+				};
+			});
+		});
+	</script>
+</body>
+</html>

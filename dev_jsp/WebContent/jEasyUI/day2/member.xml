@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'utf-8'?>
+<ROWSET>
+   <ROW num="1">
+      <MEM_ID>test</MEM_ID>
+      <MEM_PW>123</MEM_PW>
+      <MEM_NAME>이순신</MEM_NAME>
+   </ROW>
+   <ROW num="2">
+      <MEM_ID>apple</MEM_ID>
+      <MEM_PW>123</MEM_PW>
+      <MEM_NAME>이성계</MEM_NAME>
+   </ROW>
+   <ROW num="3">
+      <MEM_ID>haha</MEM_ID>
+      <MEM_PW>123</MEM_PW>
+      <MEM_NAME>김유신</MEM_NAME>
+   </ROW>
+</ROWSET>

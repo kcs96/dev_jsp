@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var xhrObject = null;//변수 선언
+	function createRequest(){
+		try {
+			//IE8.0이상, 사파리, 오페라, 크롬, 파이어폭스
+			xhrObject = new XMLHttpRequest();
+		} catch (trymicrosoft) {
+			try {
+				xhrObject = new ActiveObject("Msxml2.XMLHTTP");		//IE6.0	
+			} catch (e) {
+				xhrObject = null;
+			}
+		}
+		if(xhrObject==null){
+			alert("비동기통신 객체 생성 에러.");
+		}
+	}	
+	function startMethod(){
+		createRequest();
+		xhrObject.open("GET","requestGet.xml",true);//통신 전에 필요한 상수값을 지정
+		xhrObject.onreadystatechange = result_process;//콜백함수 이름 먼저 등록
+		xhrObject.send(null);//전송처리		
+	}
+	function result_process(){
+		if(xhrObject.readyState == 4){
+			if(xhrObject.status == 200){
+				//document.getElementById("d_xml").innerText = xhrObject.responseXML;
+				document.getElementById("d_xml").innerHTML = xhrObject.responseText;
+			}
+		}
+		
+	}
+</script>
+</head>
+<body>
+<div id="d_xml"></div>
+<button onclick="startMethod()">전송</button>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE configuration     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<typeAliases>
+	<typeAlias type="com.vo.EmpVO" alias="empVO"/>
+</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@192.168.0.252:1521:orcl11" />
+				<property name="username" value="scott" />
+				<property name="password" value="tiger" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+<!-- xml 주석
+DML 구문 즉 SELECT, INSERT, UPDATE, DELETE을 작성된 xml파일의 물리적인 위치와 파일명을 등록하기
+-->
+		<mapper resource="orm/mybatis/mapper/emp.xml" />
+		<mapper resource="orm/mybatis/mapper/book.xml" />
+		<mapper resource="orm/mybatis/mapper/dept.xml" />
+		<mapper resource="orm/mybatis/mapper/comon.xml" />
+	</mappers>
+</configuration> 
