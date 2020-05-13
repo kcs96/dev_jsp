@@ -102,8 +102,26 @@
 		<servlet-name>parameterServlet</servlet-name>
 		<url-pattern>/ch03/parameterAction.do</url-pattern>
 	</servlet-mapping>
+<!-- 	
+	<servlet>
+		<servlet-name>dept</servlet-name>
+		<servlet-class>forward.DeptController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dept</servlet-name>
+		<url-pattern>/forward/deptList.do</url-pattern>
+	</servlet-mapping> -->
 	
-	<error-page>
+		<servlet>
+		<servlet-name>dept2</servlet-name>
+		<servlet-class>jsp.dept.DeptController2</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dept2</servlet-name>
+		<url-pattern>/dept/jsonDeptList.do</url-pattern>
+	</servlet-mapping>
+	
+<!-- 	<error-page>
 		<error-code>404</error-code>
 		<location>/error/error404.jsp</location>
 	</error-page>
@@ -116,5 +134,5 @@
 	<error-page>
 		<exception-type>java.lang.NullPointerException</exception-type>
 		<location>/error/errorNullPointer.jsp</location>
-	</error-page>
+	</error-page> -->
 </web-app>
