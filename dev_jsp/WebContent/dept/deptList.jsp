@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 	$("#dg_dept").datagrid({
-		url:'./jsonDeptList.do',
+		url:'./deptList.km',
 		title:'부서관리',
 		width: 480,
 	    columns:[[

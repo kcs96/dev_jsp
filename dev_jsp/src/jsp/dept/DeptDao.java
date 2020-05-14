@@ -18,8 +18,9 @@ public class DeptDao {
 		logger.info("deptList 호출 성공");
 		List<Map<String,Object>> plist = null;
 		try {
-			SqlSession sqlSec = dbMyb.openSession();
-			plist = sqlSec.selectList("deptList",pMap);
+			SqlSession sqlSes = dbMyb.openSession();
+			//커넥션 얻기 성공==>sqlses
+			plist = sqlSes.selectList("deptList",pMap);
 			System.out.println("조회한 로우 수 : "+plist.size());
 		} catch (Exception e) {
 			e.printStackTrace();

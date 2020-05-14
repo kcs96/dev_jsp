@@ -27,6 +27,7 @@ public class SqlMapDeptDao {
 			sqlMapper = new SqlSessionFactoryBuilder().build(reader);
 			//sql문을 요청하기 위한 SqlSession객체 생성하기
 			SqlSession sqlSec = sqlMapper.openSession();
+			//커넥션 얻기 성공 ===> sql Ses
 			dlist = sqlSec.selectList("deptList");
 			System.out.println("조회한 로우 수 : "+dlist.size());
 		} catch (Exception e) {
