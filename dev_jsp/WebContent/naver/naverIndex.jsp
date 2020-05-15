@@ -28,14 +28,7 @@
 <script type="text/javascript">
 function img() {
 	var key = $("#p_key").text();
-	$.ajax({
-		method: "get"
-	   ,url: "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=" + key"
-	   ,dataType: "text"
-	   ,success:function(data){
-		   $("#d_img").html("<img src="+https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=" + key"+"/>");
-	   }
-	});
+	$("#d_img").html("<img src='https://openapi.naver.com/v1/captcha/ncaptcha.bin?key=" + key+"'/>");
 }
 </script>
 </head>
