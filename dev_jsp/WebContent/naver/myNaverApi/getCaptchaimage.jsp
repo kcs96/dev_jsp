@@ -48,6 +48,6 @@
 	 	    out.println(responseBody);
          }
 	 }catch(Exception e){
-		 
+		 out.print("오류");
 	 }
 	 %>
