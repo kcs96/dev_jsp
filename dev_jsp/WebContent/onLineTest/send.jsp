@@ -6,6 +6,7 @@
 	String htest3 = request.getParameter("htest3");
 	String htest4 = request.getParameter("htest4");
 	out.print(htest1+" ,"+htest2+" ,"+htest3+" ,"+htest4);
+	
 %>
 <form method="get" action="account.jsp">
 <input type="hidden" name="htest1" value="<%=request.getParameter("htest1")%>">

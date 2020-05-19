@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
     <%
     //쿠키를 쓴다면 여기에 사용한다.
-    //String test1 = request.getParameter("htest1");
     String h_no = request.getParameter("h_no");
     Cookie c_hno = new Cookie("c_hno", h_no);
     c_hno.setMaxAge(60*60);

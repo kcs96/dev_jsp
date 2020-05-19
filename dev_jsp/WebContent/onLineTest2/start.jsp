@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
+<%
 	Cookie[] cookies = request.getCookies();//쿠키값을 얻어올땐 배열로 받아야한다.
 	String h_no=null;
 	if(cookies!=null &&cookies.length >0){
@@ -16,16 +16,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>문제1</title>
+<title>온라인테스트(쿠키활용처리)</title>
 <%@ include file="../common/jEasyUICommon.jsp"%>
-<script type="text/javascript">
-	function cdelete(){
-		location.href="deleteCookie.jsp"
-	}
-</script>
 </head>
 <body>
-<button onClick="cdelete()">쿠키 삭제</button>
 <form method="get" action="test1.jsp">
 	수험번호 :<input type="hidden" name="h_no" value="20200515001"><br>
 	수험자명 :<input type="hidden" name="h_name" value="이순신"><br>
