@@ -24,7 +24,7 @@
 		rs = pstmt.executeQuery();
 		while(rs.next()){
 			out.print(rs.getString("dname"));
-		}
+		} 
 	} catch (Exception e) {
 		out.print("e ===>");
 	}
