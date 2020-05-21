@@ -23,7 +23,7 @@
 		users[0]= htest1;
 		users[1]= htest2;
 		users[2]= htest3;
-		users[3]= htest4;
+		users[3]= htest4; 
 		int jumsu = 0;
 		for(int i =0;i<users.length;i++){
 			for(int j=0; j<daps.length;j++){
